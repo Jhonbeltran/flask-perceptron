@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>Compuerta And</h1>
+<h3>Usamos el Perceptron simple</h3>
+<p>La compuerta and luce de la siguiente manera</p>
+<table>
+	<tr><th>AND</th></tr>
+	<tr><th>x1</th><th>x2</th><th>y</th></tr>
+	<tr><td>0</td><td>0</td><td>0</td></tr>
+	<tr><td>0</td><td>1</td><td>0</td></tr>
+	<tr><td>1</td><td>0</td><td>0</td></tr>
+	<tr><td>1</td><td>1</td><td>1</td></tr>
+</table>
+
+<p><b>Los pesos finales son: </b>{{pesos_finales}}</p>
+<p>{{log}}</p>
+
+<a href="/">Volver</a>
+{% endblock %}
