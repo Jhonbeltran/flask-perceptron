@@ -9,6 +9,7 @@ class Perceptron(object):
         # add one for bias
         self.epochs = epochs
         self.lr = lr
+        self.learning_lap = 0
         
     def activation_fn(self, x):
         return 1 if x >= 0 else 0
@@ -51,6 +52,7 @@ class Perceptron(object):
                 self.log.append("Ajuste de pesos {}".format(self.W))
 
                 learn_loop += 1
+                self.learning_lap = learn_loop
 
 
 #if __name__ == '__main__':

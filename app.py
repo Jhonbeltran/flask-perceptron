@@ -21,8 +21,14 @@ def and_gate():
 	"""La predicción se va a realizar en una nueva ventana"""
 	prediccion = perceptron.predict(np.array([1,1]))
 	print(Fore. CYAN + "El Resultado es: {}".format(prediccion))
-	log = perceptron.log
-	return render_template('and_gate.html', pesos_finales=pesos_finales, log=log)
+	#Encontrar una mejor forma para mostrar los logs
+	log_reverse = perceptron.log[::-1]
+	last_log_reverse = log_reverse[:10]
+	last_log = last_log_reverse[::-1]
+	learning_lap = perceptron.learning_lap
+	return render_template('and_gate.html', pesos_finales=pesos_finales,
+											last_log=last_log, 
+											learning_lap=learning_lap)
 
 if __name__ == '__main__':
 	app.run()
