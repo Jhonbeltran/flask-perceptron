@@ -15,15 +15,15 @@
 <h3><b>Los pesos finales son: </b>{{pesos_finales}}</h3>
 
 <h2>Realizar Comprobación</h2>
-<form action="/predict" method="post">
+<form action="/and_gate" method="post">
 	<fieldset>
 		<legend>Ingresa una entrada valida para la compuerta que seleccionaste</legend>
 
 		<label for="first_input">Primera entrada</label>
-		<input type="number" id="first_input" name="first_input">
+		<input required type="number" id="first_input" name="first_input">
 
 		<label for="second_input">Segunda entrada</label>
-		<input type="number" id="second_input" name="second_input">
+		<input required type="number" id="second_input" name="second_input">
 
 		<button type="submit" name="button">Comprobar</button>
 	</fieldset>
