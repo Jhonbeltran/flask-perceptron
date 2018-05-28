@@ -1,8 +1,377 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1>Perceptrón simple y multi-capa</h1>
-<h3>¿Que compuerta quieres que aprenda el modelo?</h3>
-<a href="/and_gate">Compuerta AND</a>
-<a href="/or_gate">Compuerta OR</a>
-<a href="/xor_gate">Compuerta XOR</a>
+<style>
+	/*
+ * -- BASE STYLES --
+ * Most of these are inherited from Base, but I want to change a few.
+ */
+body {
+    color: #526066;
+}
+
+h2, h3 {
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+p {
+    line-height: 1.6em;
+}
+
+
+/*
+ * -- Layout Styles --
+ */
+.l-content {
+    margin: 0 auto;
+}
+
+.l-box {
+    padding: 0.5em 2em;
+}
+
+/*
+ * -- MENU STYLES --
+ * Make the menu have a very faint box-shadow.
+ */
+.pure-menu {
+    box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
+}
+
+.pure-menu-link {
+    padding: .5em .7em;
+}
+
+
+/*
+ * -- BANNER --
+ * The top banner with the headings. By using a combination
+ * of `display: table;` and `display: table-cell;`, we can
+ * vertically center the text.
+ */
+
+.banner {
+    background: transparent url('http://24.media.tumblr.com/ccb268832580ac12951828a1c179de69/tumblr_mo2xbk8JUK1st5lhmo1_1280.jpg') 0 0 no-repeat fixed;
+    text-align: center;
+    background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://24.media.tumblr.com/ccb268832580ac12951828a1c179de69/tumblr_mo2xbk8JUK1st5lhmo1_1280.jpg', sizingMethod='scale');
+
+    height: 200px;
+    width: 100%;
+    margin-bottom: 3em;
+    display: table;
+}
+
+    .banner-head {
+        display: table-cell;
+        vertical-align: middle;
+        margin-bottom: 0;
+        font-size: 2em;
+        color: white;
+        font-weight: 500;
+        text-shadow: 0 1px 1px black;
+    }
+
+
+
+/*
+ * -- PRICING TABLE WRAPPER --
+ * This element wraps up all the pricing table elements
+ */
+ .pricing-tables,
+ .information {
+    max-width: 980px;
+    margin: 0 auto;
+ }
+.pricing-tables {
+    margin-bottom: 3.125em;
+    text-align: center;
+}
+
+/*
+ * -- PRICING TABLE  --
+ * Every pricing table has the .pricing-table class
+ */
+.pricing-table {
+    border: 1px solid #ddd;
+    margin: 0 0.5em 2em;
+    padding: 0 0 3em;
+}
+
+/*
+ * -- PRICING TABLE HEADER COLORS --
+ * Choose a different color based on the type of pricing table.
+ */
+.pricing-table-free .pricing-table-header {
+    background: #519251;
+}
+
+.pricing-table-biz .pricing-table-header {
+    background: #2c4985;
+}
+
+/*
+ * -- PRICING TABLE HEADER --
+ * By default, a header is black/white, and has some styles for its <h2> name.
+ */
+.pricing-table-header {
+    background: #111;
+    color: #fff;
+}
+    .pricing-table-header h2 {
+        margin: 0;
+        padding-top: 2em;
+        font-size: 1em;
+        font-weight: normal;
+
+    }
+
+
+/*
+ * -- PRICING TABLE PRICE --
+ * Styles for the price and the corresponding <span>per month</span>
+ */
+.pricing-table-price {
+    font-size: 6em;
+    margin: 0.2em 0 0;
+    font-weight: 100;
+}
+    .pricing-table-price span {
+        display: block;
+        text-transform: uppercase;
+        font-size: 0.2em;
+        padding-bottom: 2em;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.5);
+        *color: #fff;
+    }
+
+
+
+/*
+ * -- PRICING TABLE LIST --
+ * Each pricing table has a <ul> which is denoted by the .pricing-table-list class
+ */
+.pricing-table-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+
+/*
+ * -- PRICING TABLE LIST ELEMENTS --
+ * Styles for the individual list elements within each pricing table
+ */
+.pricing-table-list li {
+    padding: 0.8em 0;
+    background: #f7f7f7;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+
+/*
+ * -- PRICING TABLE BUTTON --
+ * Styles for the "Choose" button at the bottom of a pricing table.
+ * This inherits from Pure Button.
+ */
+.button-choose {
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #333;
+    border-radius: 2em;
+    font-weight: bold;
+    position: relative;
+    bottom: -1.5em;
+}
+
+.information-head {
+    color: black;
+    font-weight: 500;
+}
+
+.footer {
+    background: #111;
+    color: #888;
+    text-align: center;
+}
+    .footer a {
+        color: #ddd;
+    }
+
+
+
+/*
+ * -- TABLET MEDIA QUERIES --
+ * On tablets, we want to slightly adjust the size of the banner
+ * text and add some vertical space between the various pricing tables
+ */
+@media(min-width: 767px) {
+
+    .banner-head {
+        font-size: 4em;
+    }
+    .pricing-table {
+        margin-bottom: 0;
+    }
+
+}
+
+/*
+ * -- PHONE MEDIA QUERIES --
+ * On phones, we want to reduce the height and font-size of the banner further
+ */
+@media (min-width: 480px) {
+    .banner {
+        height: 400px;
+    }
+    .banner-head {
+        font-size: 3em;
+    }
+}
+</style>
+
+<div class="pure-menu pure-menu-horizontal">
+    <a href="#" class="pure-menu-heading">Perceptron</a>
+    <ul class="pure-menu-list">
+        <li class="pure-menu-item"><a class="pure-menu-link" href="/and_gate">Compuerta AND</a></li>
+        <li class="pure-menu-item pure-menu-selected"><a class="pure-menu-link" href="/or_gate">Compuerta OR</a></li>
+        <li class="pure-menu-item"><a class="pure-menu-link" href="/xor_gate">Compuerta XOR</a></li>
+        <li class="pure-menu-item"><a class="pure-menu-link" href="/xnor_gate">Compuerta XNOR</a></li>
+    </ul>
+</div>
+<div class="l-content" style="
+    padding-top: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+">
+    <div class="information pure-g">
+        <div class="pure-u-1 pure-u-md-1-2">
+            <div class="l-box">
+                <h3 class="information-head">¿Que es el Perceptrón?</h3>
+                <p>
+                    El modelo biológico más simple de un perceptrón es una neurona y viceversa. Es decir, el modelo matemático más simple de una neurona es un perceptrón. La neurona es una célula especializada y caracterizada por poseer una cantidad indefinida de canales de entrada llamados dendritas y un canal de salida llamado axón. Las dendritas operan como sensores que recogen información de la región donde se hallan y la derivan hacia el cuerpo de la neurona que reacciona mediante una sinapsis que envía una respuesta hacia el cerebro, esto en el caso de los seres vivos. <a href="https://es.wikipedia.org/wiki/Perceptr%C3%B3n#Definici%C3%B3n">Leer Más</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-2">
+            <div class="l-box">
+                <h3 class="information-head">Un poco de historia</h3>
+                <p>
+                    Frank Rosenblat (1958) creó el perceptrón, un algoritmo de reconocimiento de patrones basado en una red de aprendizaje de computadora de dos capas usando una simple suma y la resta. Con la notación matemática, Rosenblatt también describe circuitería no en el perceptrón básico, tal como él o-exclusiva de circuito, un circuito que no se pudo procesar por redes neuronales hasta después de la propagación hacia atras algoritmo fue creado por Paul Werbos (1975). <a href="https://es.wikipedia.org/wiki/Red_neuronal_artificial#Historia">Leer Más</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-2">
+            <div class="l-box">
+                <h3 class="information-head">Perceptron de una sola capa</h3>
+                <p>
+                    En el campo de las Redes Neuronales, el perceptrón , según Frank Rosenblatt, se refiere a:
+
+                    La neurona artificial o unidad básica de inferencia en forma de discriminador lineal, a partir de lo cual se desarrolla un algoritmo capaz de generar un criterio para seleccionar un sub-grupo a partir de un grupo de componentes más grande. <a href="https://es.wikipedia.org/wiki/Perceptrón">Leer Más</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-2">
+            <div class="l-box">
+                <h3 class="information-head">Perceptron Multicapa</h3>
+                <p>
+                    El perceptrón multicapa es una red neuronal artificial (RNA) formada por múltiples capas, esto le permite resolver problemas que no son linealmente separables, lo cual es la principal limitación del perceptrón (también llamado perceptrón simple). El perceptrón multicapa puede ser totalmente o localmente conectado. En el primer caso cada salida de una neurona de la capa "i" es entrada de todas las neuronas de la capa "i+1", mientras que en el segundo cada neurona de la capa "i" es entrada de una serie de neuronas (región) de la capa "i+1". <a href="https://es.wikipedia.org/wiki/Perceptr%C3%B3n_multicapa">Leer Más</a>
+                </p>
+            </div>
+        </div>
+    </div> <!-- end information -->
+
+    <div class="pricing-tables pure-g">
+        <div class="pure-u-1 pure-u-md-1-4">
+            <div class="pricing-table pricing-table-free">
+                <div class="pricing-table-header">
+                    <h2>Compuerta AND</h2>
+
+                    <span class="pricing-table-price">
+                        <span>Aprende como Funciona</span>
+                    </span>
+                </div>
+
+                <ul class="pricing-table-list">
+                    <li>Linealmente separable</li>
+                    <li>Percetrón de una sola capa</li>
+                    <li>Comprueba si está correctamente entrenada</li>
+                </ul>
+
+                <a class="button-choose pure-button" href="/and_gate">Visitar</a>
+            </div>
+        </div>
+
+		<div class="pure-u-1 pure-u-md-1-4">
+            <div class="pricing-table pricing-table-free">
+                <div class="pricing-table-header">
+                    <h2>Compuerta OR</h2>
+
+                    <span class="pricing-table-price">
+                        <span>Aprende como Funciona</span>
+                    </span>
+                </div>
+
+                <ul class="pricing-table-list">
+                    <li>Linealmente separable</li>
+                    <li>Percetrón de una sola capa</li>
+                    <li>Comprueba si está correctamente entrenada</li>
+                </ul>
+
+                <a class="button-choose pure-button" href="/or_gate">Visitar</a>
+            </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-4">
+            <div class="pricing-table pricing-table-free">
+                <div class="pricing-table-header">
+                    <h2>Compuerta XOR</h2>
+
+                    <span class="pricing-table-price">
+                        <span>Aprende como Funciona</span>
+                    </span>
+                </div>
+
+                <ul class="pricing-table-list">
+                    <li>Linealmente NO separable</li>
+                    <li>Percetrón Multicapa</li>
+                    <li>Comprueba si está correctamente entrenada</li>
+                </ul>
+
+                <a class="button-choose pure-button" href="/xor_gate">Visitar</a>
+            </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-4">
+            <div class="pricing-table pricing-table-free">
+                <div class="pricing-table-header">
+                    <h2>Compuerta XNOR</h2>
+
+                    <span class="pricing-table-price">
+                        <span>Aprende como Funciona</span>
+                    </span>
+                </div>
+
+                <ul class="pricing-table-list">
+                    <li>Linealmente NO separable</li>
+                    <li>Percetrón Multicapa</li>
+                    <li>Comprueba si está correctamente entrenada</li>
+                </ul>
+
+                <a class="button-choose pure-button" href="/xnor_gate">Visitar</a>
+            </div>
+        </div>
+
+    </div> <!-- end pricing-tables -->
+
+    
+</div> <!-- end l-content -->
+
 {% endblock %}

@@ -103,5 +103,29 @@ def xor_gate():
 
     return render_template('xor_gate.html', pesos_finales=pesos_finales)
 
+@app.route(r'/xnor_gate', methods=['GET', 'POST'])
+def xnor_gate():
+    nn = NeuralNetwork([2,2,1])
+    X = np.array([[0, 0],[0, 1],[1, 0],[1, 1]])
+    Z = np.array([0, 1])
+    y = np.array([1, 0, 0, 1])
+    nn.fit(X, y)
+    pesos_finales = nn.weights
+
+    for e in X:
+        print(e,nn.predict(e))
+
+    if request.form:
+    	first_input = int(request.form.get('first_input'))
+    	second_input = int(request.form.get('second_input'))
+    	prediction = nn.predict(np.array([first_input,second_input]))
+    	return render_template('predict.html', first_input=first_input,
+    										   second_input=second_input,
+    										   prediction = prediction,
+    										   gate = 'XNOR',
+    										   prev_url = '/xnor_gate')
+
+    return render_template('xnor_gate.html', pesos_finales=pesos_finales)
+
 if __name__ == '__main__':
 	app.run()
