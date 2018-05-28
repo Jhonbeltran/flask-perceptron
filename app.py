@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from single_perceptron import Perceptron
 import numpy as np #Libreria para manejo avanzado de arrays
 from colorama import Fore, Back, Style, init
-from multi_layer_perceptron import MultiPerceptron
+from multi_layer_perceptron import NeuralNetwork
 
 app = Flask(__name__)
 
@@ -78,12 +78,19 @@ def predict():
 def xor_gate():
     nn = NeuralNetwork([2,2,1])
     X = np.array([[0, 0],[0, 1],[1, 0],[1, 1]])
+    Z = np.array([[0, 1],[0, 1],[0, 1],[0, 1]])
     y = np.array([0, 1, 1, 0])
     nn.fit(X, y)
-    
+    pesos_finales = nn.weights
+    # prediction = nn.predict(np.array([[0, 1],[0, 1],[0, 1],[0, 1]]))
+    # print(prediction)
     for e in X:
         print(e,nn.predict(e))
-	return render_template('xor_gate.html')
+
+    for e in Z:
+        print(e,nn.predict(e))
+
+    return render_template('xor_gate.html', pesos_finales=pesos_finales)
 
 if __name__ == '__main__':
 	app.run()

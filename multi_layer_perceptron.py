@@ -35,15 +35,16 @@ class NeuralNetwork:
         r = 2*np.random.random( (layers[i] + 1, layers[i+1])) - 1
         self.weights.append(r)
 
-    def fit(self, X, y, learning_rate=0.2, epochs=100000):
+    def fit(self, X, y, learning_rate=0.2, epochs=500000):
         # Add column of ones to X
         # This is to add the bias unit to the input layer
         ones = np.atleast_2d(np.ones(X.shape[0]))
         X = np.concatenate((ones.T, X), axis=1)
          
         for k in range(epochs):
-            if k % 10000 == 0: print 'epochs:', k
-            
+            if k % 10000 == 0:
+                print('epochs:', k)
+
             i = np.random.randint(X.shape[0])
             a = [X[i]]
 
@@ -74,7 +75,7 @@ class NeuralNetwork:
                 self.weights[i] += learning_rate * layer.T.dot(delta)
 
     def predict(self, x): 
-        a = np.concatenate((np.ones(1).T, np.array(x)), axis=1)      
+        a = np.concatenate((np.ones(1).T, np.array(x)), axis=0)      
         for l in range(0, len(self.weights)):
             a = self.activation(np.dot(a, self.weights[l]))
         return a
