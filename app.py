@@ -76,15 +76,12 @@ def predict():
 
 @app.route(r'/xor_gate', methods=['GET', 'POST'])
 def xor_gate():
-	inputs=np.array([[0,0], [0,1], [1,0], [1,1] ])
-	outputs=np.array([ [0], [1],[1],[0] ])
-
-	n=NN(inputs)
-	print(n.think(inputs))
-	n.train(inputs, outputs, 10000)
-	print(n.think(inputs))
-	return render_template('xor_gate.html')
-
+	X = np.array([[0,0], [0,1], [1,0], [1,1] ])
+	d = np.array([ [0], [1],[1],[0] ])
+	multi_perceptron = MultiPerceptron(X)
+	multi_perceptron.train(X, d, 10000)
+	pesos_finales = multi_perceptron.think(X)
+	return render_template('xor_gate.html', pesos_finales=pesos_finales,)
 
 if __name__ == '__main__':
 	app.run()

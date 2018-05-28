@@ -6,7 +6,7 @@ def sigmoid(x):
 def sigmoid_der(x):
     return x*(1.0 - x)
 
-class NN:
+class MultiPerceptron:
     def __init__(self, inputs):
         self.inputs = inputs
         self.l=len(self.inputs)
