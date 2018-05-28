@@ -35,15 +35,15 @@ class NeuralNetwork:
         r = 2*np.random.random( (layers[i] + 1, layers[i+1])) - 1
         self.weights.append(r)
 
-    def fit(self, X, y, learning_rate=0.2, epochs=500000):
+    def fit(self, X, y, learning_rate=0.2, epochs=1000000):
         # Add column of ones to X
         # This is to add the bias unit to the input layer
         ones = np.atleast_2d(np.ones(X.shape[0]))
         X = np.concatenate((ones.T, X), axis=1)
          
         for k in range(epochs):
-            if k % 10000 == 0:
-                print('epochs:', k)
+            #if k % 10000 == 0:
+            #    print('epochs:', k , error)
 
             i = np.random.randint(X.shape[0])
             a = [X[i]]
@@ -54,6 +54,13 @@ class NeuralNetwork:
                     a.append(activation)
             # output layer
             error = y[i] - a[-1]
+
+            if (error > 0.0) & (error < 0.0000000000001):
+                break
+
+            if k % 10000 == 0:
+                print('epochs:', k , error)
+
             deltas = [error * self.activation_prime(a[-1])]
 
             # we need to begin at the second to last layer 

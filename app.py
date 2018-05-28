@@ -3,8 +3,13 @@ from single_perceptron import Perceptron
 import numpy as np #Libreria para manejo avanzado de arrays
 from colorama import Fore, Back, Style, init
 from multi_layer_perceptron import NeuralNetwork
+from flask_pure import Pure
 
 app = Flask(__name__)
+app.config['PURECSS_RESPONSIVE_GRIDS'] = True
+app.config['PURECSS_USE_CDN'] = True
+app.config['PURECSS_USE_MINIFIED'] = True
+Pure(app)
 
 
 @app.route(r'/', methods=['GET'])
