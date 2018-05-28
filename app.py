@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 from single_perceptron import Perceptron
 import numpy as np #Libreria para manejo avanzado de arrays
-from colorama import Fore, Back, Style, init
 from multi_layer_perceptron import NeuralNetwork
 from flask_pure import Pure
 
