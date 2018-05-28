@@ -78,17 +78,23 @@ def predict():
 def xor_gate():
     nn = NeuralNetwork([2,2,1])
     X = np.array([[0, 0],[0, 1],[1, 0],[1, 1]])
-    Z = np.array([[0, 1],[0, 1],[0, 1],[0, 1]])
+    Z = np.array([0, 1])
     y = np.array([0, 1, 1, 0])
     nn.fit(X, y)
     pesos_finales = nn.weights
-    # prediction = nn.predict(np.array([[0, 1],[0, 1],[0, 1],[0, 1]]))
-    # print(prediction)
+
     for e in X:
         print(e,nn.predict(e))
 
-    for e in Z:
-        print(e,nn.predict(e))
+    if request.form:
+    	first_input = int(request.form.get('first_input'))
+    	second_input = int(request.form.get('second_input'))
+    	prediction = nn.predict(np.array([first_input,second_input]))
+    	return render_template('predict.html', first_input=first_input,
+    										   second_input=second_input,
+    										   prediction = prediction,
+    										   gate = 'XOR',
+    										   prev_url = '/xor_gate')
 
     return render_template('xor_gate.html', pesos_finales=pesos_finales)
 
