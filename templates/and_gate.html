@@ -232,14 +232,18 @@ p {
     }
 }
 </style>
-
 <div class="pure-menu pure-menu-horizontal">
-    <a href="#" class="pure-menu-heading">Perceptron</a>
+    <a href="/" class="pure-menu-heading">Perceptron</a>
     <ul class="pure-menu-list">
-        <li class="pure-menu-item"><a class="pure-menu-link" href="/and_gate">Compuerta AND</a></li>
-        <li class="pure-menu-item"><a class="pure-menu-link" href="/or_gate">Compuerta OR</a></li>
-        <li class="pure-menu-item"><a class="pure-menu-link" href="/xor_gate">Compuerta XOR</a></li>
-        <li class="pure-menu-item"><a class="pure-menu-link" href="/xnor_gate">Compuerta XNOR</a></li>
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a href="#" id="menuLink1" class="pure-menu-link">Compuertas</a>
+            <ul class="pure-menu-children">
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/and_gate">AND</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/or_gate">OR</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/xor_gate">XOR</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/xnor_gate">XNOR</a></li>
+            </ul>
+        </li>
     </ul>
 </div>
 <div class="l-content" style="
