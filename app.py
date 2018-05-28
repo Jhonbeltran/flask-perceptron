@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from single_perceptron import Perceptron
 import numpy as np #Libreria para manejo avanzado de arrays
 from colorama import Fore, Back, Style, init
+from multi_layer_perceptron import MultiPerceptron
 
 app = Flask(__name__)
 
@@ -72,6 +73,17 @@ def or_gate():
 @app.route(r'/predict', methods=['GET'])
 def predict():
 	return render_template('predict.html')
+
+@app.route(r'/xor_gate', methods=['GET', 'POST'])
+def xor_gate():
+	inputs=np.array([[0,0], [0,1], [1,0], [1,1] ])
+	outputs=np.array([ [0], [1],[1],[0] ])
+
+	n=NN(inputs)
+	print(n.think(inputs))
+	n.train(inputs, outputs, 10000)
+	print(n.think(inputs))
+	return render_template('xor_gate.html')
 
 
 if __name__ == '__main__':
